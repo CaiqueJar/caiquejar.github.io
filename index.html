@@ -1,373 +1,664 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caique Dias | Desenvolvedor Full-stack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- Splide CSS e JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    * {
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Estilos customizados para o Splide */
+    .splide__arrow {
+      background: rgba(79, 70, 229, 0.2) !important;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      width: 2.5rem;
+      height: 2.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .splide__arrow svg {
+      fill: #4f46e5 !important;
+    }
+
+    .dark .splide__arrow svg {
+      fill: #818cf8 !important;
+    }
+
+    .splide:hover .splide__arrow {
+      opacity: 1;
+    }
+
+    .splide__pagination__page {
+      background: #4f46e5 !important;
+      opacity: 0.3;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+    }
+
+    .splide__pagination__page.is-active {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .dark .splide__pagination__page {
+      background: #818cf8 !important;
+    }
+
+    /* Estilos para os slides com altura fixa e scroll */
+    .splide__slide {
+      height: 480px !important;
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      transition: border-color 0.3s ease;
+    }
+
+    .splide__slide:hover {
+      border-color: #4f46e5;
+    }
+
+    .dark .splide__slide:hover {
+      border-color: #818cf8;
+    }
+
+    .slide-image-container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slide-image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 10s ease;
+    }
+
+    .splide__slide:hover .slide-image-container img {
+      transform: translateY(calc(-100% + 480px));
+    }
+
+    @media (min-width: 769px) {      
+
+      .slide-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 2rem 1rem 1rem;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .splide__slide:hover .slide-info {
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .splide__slide {
+        height: 320px !important;
+      }
+      .splide__slide:hover .slide-image-container img {
+        transform: translateY(calc(-100% + 320px));
+      }
+
+      .slide-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        padding: 2rem 1rem 1rem;
+        color: white;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-info h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .slide-info p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+  </style>
 </head>
-<body>
-    <div class="go-back">
-        <a href="#main"><i class="fa-solid fa-chevron-up"></i></a>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200">
+
+  <div class="fixed top-4 right-4 z-50">
+    <button id="themeToggle"
+      class="p-3 rounded-full bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition shadow-lg">
+      <i id="themeIcon" class="bi bi-sun-fill text-xl"></i>
+      <i id="themeIconDark" class="bi bi-moon-fill text-xl hidden"></i>
+    </button>
+  </div>
+
+  <section class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))]
+from-indigo-200/40 via-white to-white
+dark:from-indigo-900/20 dark:via-zinc-950 dark:to-zinc-950">
+
+    <div class="max-w-4xl text-center space-y-6 relative z-10">
+      <h1
+        class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+        Caique Dias
+      </h1>
+
+      <p class="text-2xl text-zinc-700 dark:text-zinc-300">
+        Desenvolvedor Full-stack • Laravel/PHP
+      </p>
+
+      <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+        Construindo sistemas escaláveis e APIs robustas com PHP e Laravel.
+        Foco em código limpo, performance e boas práticas.
+      </p>
+
+      <div class="flex justify-center gap-4 pt-4">
+        <a href="https://github.com/CaiqueJar" target="_blank"
+          class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
+          <i class="devicon-github-original text-xl"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/caique-dias-9668663aa" target="_blank"
+          class="px-6 py-3 border border-indigo-600 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-600 hover:text-white dark:hover:text-white transition flex items-center gap-2">
+          <i class="devicon-linkedin-plain text-xl"></i> LinkedIn
+        </a>
+        <a href="#contato"
+          class="px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-indigo-600 transition flex items-center gap-2">
+          <i class="devicon-google-original text-xl"></i> Contato
+        </a>
+      </div>
+
+      <div class="flex justify-center gap-6 pt-8 text-zinc-500">
+        <div class="flex items-center gap-2"><i
+            class="bi bi-check-circle text-indigo-600 dark:text-indigo-400 text-sm"></i> 3 anos</div>
+        <div class="flex items-center gap-2"><i
+            class="bi bi-check-circle text-indigo-600 dark:text-indigo-400 text-sm"></i> 10+ projetos
+        </div>
+      </div>
     </div>
-    <header id="header">
-        <div class="content">
-            <ul>
-                <li>
-                    <a href="#about-me"><i class="fa-solid fa-user"></i> <span>Sobre mim</span></a>
-                </li>
-                <li>
-                    <a href="#hard-skills"><i class="fa-solid fa-star"></i> <span>Hard skills</span></a>
-                </li>
-                <li>
-                    <a href="#projects"><i class="fa-solid fa-code"></i> <span>Projetos</span></a>
-                </li>
-                <li>
-                    <a href="#experience"><i class="fa-solid fa-building"></i> <span>Experiência profissional</span></a>
-                </li>
-            </ul>
-        </div>
-    </header>
-    <section class="wrapper-main" id="main">
-        <div class="content">
-            <div class="wrapper">
-                <h1>
-                    <span id="typing">Olá, me chamo Caique Dias</span>
-                </h1>
-                <h2>Sou um <span class="web-dev">desenvolvedor web</span></h2>
-                <ul>
-                    <li>
-                        <a href="https://github.com/CaiqueJar" target="_blank">
-                            <i class="fa-brands fa-square-github"></i>
-                            <div class="tooltip bottom">
-                                Github
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/in/caique-dias-de-melo-1b28221a6/" target="_blank">
-                            <i class="fa-brands fa-linkedin"></i>
-                            <div class="tooltip bottom">
-                                Linkedin
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://wa.me/5511958595849" target="_blank">
-                            <i class="fa-brands fa-square-whatsapp"></i>
-                            <div class="tooltip bottom">
-                                Whatsapp
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <span class="symbol">
-                    ?>
-                </span>
-            </div>
-        </div>
-    </section>
-    <section class="about-me" id="about-me">
-        <div class="content">
-            <div class="wrapper-about-me">
-                <div style="position: relative;">
-                    <div class="monitor">
-                        <p><span style="color: #4ee24e;">Dias</span>:~$</p>
-                        <p><i style="color: #4ee24e;" class="fa-solid fa-check"></i> Dedicado a aprender</p>
-                        <p><i style="color: #4ee24e;" class="fa-solid fa-check"></i> Focado</p>
-                        <p><i style="color: #4ee24e;" class="fa-solid fa-check"></i> Pontual</p>
-                        <p><i style="color: #4ee24e;" class="fa-solid fa-check"></i> Ágil</p>
-                    </div>
-                    <div class="border"></div>
-                </div>
-                <div>
-                    <h2>Sobre <span>mim</span></h2>
-                    <p>
-                        Sou desenvolvedor com foco maior no back end.
-                    </p>
-                    <p>
-                        Possuo experiência profissional, cursei o técnico em Desenvolvimento de Sistemas na Etec de Guaianases aonde pude aprender tecnologias como HTML, CSS, Java, Mysql e Php com Laravel, cujo os dois últimos utilizei para realizar diversos projetos presentes no meu Github e trabalho com esses atualmente.
-                    </p>
-                    <p>
-                        Também me aventurei com o curso de Criação de Jogos da Danki Code e desenvolvi diversos games com Java.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="hard-skills" id="hard-skills">
-        <div class="content">
-            <h2>Hard <span>skills</span></h2>
-            <div class="skills">
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/composer/composer-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original-wordmark.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original-wordmark.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" />
-                </div>
-                <div class="skill">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" />
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="projects" id="projects">
-        <div class="content">
-            <h2>Alguns <span>projetos</span> recentes <span>meus</span></h2>
-            <div class="projects-grid">
-                <div class="card">
-                    <img src="img/blog.jpeg" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Sistema simples de um blog feito com Php puro e Mysql para fins de estudos.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/blog" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Php | Mysql | Composer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="img/galeria.jpeg" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Uma galeria de imagens simples aonde se pode enviar suas fotos e organiza-las em categorias que você criar. Sistema esse que pode ser escalável.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/gallery" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Php | Mysql | Composer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="img/resizer.jpeg" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Uma ideia que tive ao perceber que no meu serviço alguns colegas tinham dificuldades de converter imagens para .webp e reduzi-las usando Photoshop. Para isso, desenvolvi um conversor de imagens.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/resizer-php" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Php | Mysql | Composer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="img/nextmeal.png" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Aplicação web para restaurantes divulgarem o seu trabalho e gerirem o seu estabelecimento através de um sistema de reservas. Desenvolvimento como TCC na Etec de Guaianases no curso técnico de desenvolvimento de sistemas.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/resizer-php" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Php | Mysql | Laravel | Composer</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="img/fase1.png" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Um jogo de plataforma genérico com propósito de estudar funcionalidades de jogos, como mecanismo de pulo, animação de sprites, mudança de fases, luta com chefe, etc.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/platform-simple-game" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Java</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="img/cobrinha.jpeg" alt="">
-                    <div class="card-info">
-                        <div class="card-content">
-                            <p>
-                                Jogo da cobrinha feito em Java desenvolvido para estudo.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://github.com/CaiqueJar/game-snake" class="github-link" target="_blank">Veja mais no meu Github</a>
-                            <div class="languages">
-                                <p>Java</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="experience" id="experience">
-        <div class="content">
-            <div class="wrapper">
-                <div class="text">
-                    <h2>Experiência <span>profissional</span></h2>
-                </div>
-                <div class="splide" role="group" aria-label="Splide Basic HTML Example">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            <li class="splide__slide">
-                                <a href="https://andreahokamaodontologia.com.br/" target="_blank">
-                                    <img src="img/screencapture-andreahokamaodontologia-br-2024-02-15-16_53_10.png" alt="">
-                                </a>
-                            </li>
-                            <li class="splide__slide">
-                                <a href="http://draemilymunhoz.com.br/" target="_blank">
-                                    <img src="img/screencapture-draemilymunhoz-br-2024-02-15-16_51_57.png" alt="">
-                                </a>
-                            </li>
-                            <li class="splide__slide">
-                                <a href="https://mormarcas.com.br/" target="_blank">
-                                    <img src="img/screencapture-mormarcas-br-2024-02-15-16_54_06.png" alt="">
-                                </a>
-                            </li>
-                            <li class="splide__slide">
-                                <a href="https://techplug.com.br/" target="_blank">
-                                    <img src="img/screencapture-techplug-br-2024-02-15-16_52_31.png" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="content">
-            <div class="wrapper-footer">
-                <ul>
-                    <li>
-                        <a href="https://github.com/CaiqueJar" target="_blank">
-                            <i class="fa-brands fa-square-github"></i>
-                            <div class="tooltip top">
-                                Github
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/in/caique-dias-de-melo-1b28221a6/" target="_blank">
-                            <i class="fa-brands fa-linkedin"></i>
-                            <div class="tooltip top">
-                                Linkedin
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://wa.me/5511958595849" target="_blank">
-                            <i class="fa-brands fa-square-whatsapp"></i>
-                            <div class="tooltip top">
-                                Whatsapp
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <p>2024 © Dias</p>
-            </div>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <script>
-        document.addEventListener( 'DOMContentLoaded', function() {
-            var splide = new Splide( '.splide', {
-                type: 'loop',
-                perPage: 3,
-                gap: "1em",
-                breakpoints: {
-                    640: {
-                        perPage: 1,
-                    },
-                }
-            });
-            splide.mount();
-        } );
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var header = document.getElementById("header");
-            var navbarHeight = header.offsetHeight;
-            var lastScrollTop = 0;
+  </section>
 
-            window.onscroll = function() {scrollHide()};
+  <section class="py-24 px-6 bg-zinc-100 dark:bg-zinc-900">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <h2 class="text-4xl font-bold"><span class="text-indigo-600 dark:text-indigo-400">//</span> Sobre mim
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-lg">
+          Sou desenvolvedor web especializado em backend com Laravel e PHP.
+          Minha jornada na programação começou com a vontade de resolver problemas reais
+          e criar sistemas que façam a diferença.
+        </p>
+        <p class="text-zinc-700 dark:text-zinc-300 text-lg">
+          Tenho experiência em APIs REST, sistemas administrativos e integrações com <b>ERPs e Gateways de
+            Pagamento</b>.
+          Atualmente foco no ecossistema Laravel e estudo Sistemas de Informação na <b>Faculdade Impacta</b>.
+          Possuo <b>inglês avançado</b>, facilitando o consumo de documentações e colaboração internacional.
+        </p>
+        <div class="flex gap-4 pt-2">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">10+</div>
+            <div class="text-sm text-zinc-500">Projetos</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">3</div>
+            <div class="text-sm text-zinc-500">Anos</div>
+          </div>
+        </div>
+      </div>
 
-            function scrollHide() {
-                var st = window.pageYOffset || document.documentElement.scrollTop;
-                if (st > lastScrollTop) {
-                    header.classList.add('hide');
-                } else {
-                    header.classList.remove('hide');
-                }
-                lastScrollTop = st <= 0 ? 0 : st;
-            }
+      <div class="bg-white dark:bg-zinc-800/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700">
+        <h3 class="text-xl font-semibold mb-4 flex items-center gap-2"><i
+            class="devicon-code-plain text-indigo-600 dark:text-indigo-400 text-2xl"></i> Atualmente estudando</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-indigo-600 dark:bg-indigo-400 rounded-full"></div>
+            <span class="text-zinc-700 dark:text-zinc-300">Testes automatizados com Pest/PHPUnit</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-indigo-600 dark:bg-indigo-400 rounded-full"></div>
+            <span class="text-zinc-700 dark:text-zinc-300">Arquitetura de microsserviços</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-indigo-600 dark:bg-indigo-400 rounded-full"></div>
+            <span class="text-zinc-700 dark:text-zinc-300">Docker e containerização</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-2 h-2 bg-indigo-600 dark:bg-indigo-400 rounded-full"></div>
+            <span class="text-zinc-700 dark:text-zinc-300">Vue.js para frontend</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            typingAction();
+  <section class="py-24 px-6 bg-white dark:bg-zinc-950">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-4"><span class="text-indigo-600 dark:text-indigo-400">//</span>
+        Stack</h2>
+      <p class="text-center text-zinc-600 dark:text-zinc-400 mb-12">Tecnologias que utilizo no dia a dia</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-php-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">PHP</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-laravel-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Laravel</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-mysql-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">MySQL</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-livewire-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Livewire</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-filamentphp-original text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Filament PHP</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-git-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Git</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-linux-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Linux</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-javascript-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">JavaScript</p>
+        </div>
+        <div
+          class="bg-zinc-100 dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-600 dark:hover:border-indigo-500 transition text-center group">
+          <i
+            class="devicon-tailwindcss-plain text-5xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 font-medium text-zinc-700 dark:text-zinc-300">Tailwind</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-zinc-100 dark:bg-zinc-900">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold mb-4"><span class="text-indigo-600 dark:text-indigo-400">//</span> Projetos em
+        destaque</h2>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-10">Alguns dos meus trabalhos mais recentes no GitHub</p>
+
+      <div id="projects" class="grid md:grid-cols-3 gap-6"></div>
+
+      <div class="text-center mt-10">
+        <a href="https://github.com/CaiqueJar?tab=repositories" target="_blank"
+          class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition">
+          Ver todos os projetos <i class="devicon devicon-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-white dark:bg-zinc-950">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold mb-12"><span class="text-indigo-600 dark:text-indigo-400">//</span> Experiência</h2>
+
+      <div class="space-y-12">
+        <div class="relative pl-8 border-l-2 border-indigo-600">
+          <div class="absolute -left-[9px] top-0 w-4 h-4 bg-indigo-600 rounded-full"></div>
+          <div class="flex flex-wrap items-center gap-3 mb-2">
+            <h3 class="text-xl font-bold">Reação Web Marketing</h3>
+            <span
+              class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs px-3 py-1 rounded-full font-bold">08/2024
+              - 02/2026</span>
+          </div>
+          <p class="text-indigo-600 dark:text-indigo-400 font-medium mb-4">Desenvolvedor Web Fullstack</p>
+          <ul class="grid md:grid-cols-2 gap-3 text-zinc-600 dark:text-zinc-400 text-sm">
+            <li class="flex gap-2"><i class="bi bi-check2-circle text-indigo-500"></i> Integração com ERP Bling e APIs
+              de Pagamento</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle text-indigo-500"></i> Deploy automatizado (GitHub
+              Actions)</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle text-indigo-500"></i> Desenvolvimento de Dashboards com
+              Filament Laravel</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle text-indigo-500"></i> Manutenção de sistemas legados e
+              segurança</li>
+          </ul>
+        </div>
+
+        <div class="relative pl-8 border-l-2 border-zinc-300 dark:border-zinc-800">
+          <div class="absolute -left-[9px] top-0 w-4 h-4 bg-zinc-300 dark:bg-zinc-800 rounded-full"></div>
+          <div class="flex flex-wrap items-center gap-3 mb-2">
+            <h3 class="text-xl font-bold">Engenho de Imagens</h3>
+            <span
+              class="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-xs px-3 py-1 rounded-full font-bold">04/2023
+              - 08/2024</span>
+          </div>
+          <p class="text-zinc-500 font-medium mb-4">Desenvolvedor Web</p>
+          <ul class="grid md:grid-cols-2 gap-3 text-zinc-500 text-sm">
+            <li class="flex gap-2"><i class="bi bi-check2-circle"></i> Gestão de servidores (cPanel / Plesk)</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle"></i> Configuração de e-mails transacionais SMTP</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle"></i> Desenvolvimento de sites institucionais</li>
+            <li class="flex gap-2"><i class="bi bi-check2-circle"></i> Suporte técnico especializado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nova Seção: Galeria de Sites com Splide -->
+  <section class="py-24 px-6 bg-zinc-100 dark:bg-zinc-900">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold mb-4"><span class="text-indigo-600 dark:text-indigo-400">//</span> Sites desenvolvidos</h2>
+      
+      <div class="splide" id="sites-slider" aria-label="Galeria de Sites">
+        <div class="splide__track">
+          <ul class="splide__list">
+            <!-- Slide 1 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/vibra-saude.png" alt="Vibra Saúde">
+              </div>
+              <div class="slide-info">
+                <h3>Vibra Saúde</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+            
+            <!-- Slide 2 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/allparty.png" alt="All Party">
+              </div>
+              <div class="slide-info">
+                <h3>All Party</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+            
+            <!-- Slide 3 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/andrea.png" alt="Andrea">
+              </div>
+              <div class="slide-info">
+                <h3>Andrea</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+
+            <!-- Slide 4 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/emilymunhoz.png" alt="Emily Munhoz">
+              </div>
+              <div class="slide-info">
+                <h3>Emily Munhoz</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+
+            <!-- Slide 5 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/mormarcas.png" alt="Mor Marcas">
+              </div>
+              <div class="slide-info">
+                <h3>Mor Marcas</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+
+            <!-- Slide 6 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/techplug.png" alt="Tech Plug">
+              </div>
+              <div class="slide-info">
+                <h3>Tech Plug</h3>
+                <p>Engenho de Imagens</p>
+              </div>
+            </li>
+
+            <!-- Slide 7 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/anodex.png" alt="Anodex">
+              </div>
+              <div class="slide-info">
+                <h3>Anodex</h3>
+                <p>Reação Web</p>
+              </div>
+            </li>
+
+            <!-- Slide 8 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/freitas.png" alt="Freitas">
+              </div>
+              <div class="slide-info">
+                <h3>Freitas</h3>
+                <p>Reação Web</p>
+              </div>
+            </li>
+
+            <!-- Slide 9 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/tartaglione.png" alt="Tartaglione">
+              </div>
+              <div class="slide-info">
+                <h3>Tartaglione</h3>
+                <p>Reação Web</p>
+              </div>
+            </li>
+
+            <!-- Slide 10 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/vibra-saude.png" alt="Vibra Saúde">
+              </div>
+              <div class="slide-info">
+                <h3>Vibra Saúde</h3>
+                <p>Reação Web</p>
+              </div>
+            </li>
+
+            <!-- Slide 11 -->
+            <li class="splide__slide">
+              <div class="slide-image-container">
+                <img src="img/volimports.png" alt="Volimports">
+              </div>
+              <div class="slide-info">
+                <h3>Volimports</h3>
+                <p>Reação Web</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="py-24 px-6 bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-zinc-950">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-4"><span class="text-indigo-600 dark:text-indigo-400">//</span> Vamos
+        conversar?</h2>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-8 text-lg">
+        Estou aberto a novas oportunidades e desafios. Se você tem um projeto em mente
+        ou uma vaga interessante, entre em contato!
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-8">
+        <a href="https://wa.me/5511958595849"
+          class="bg-white dark:bg-zinc-800 p-4 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-600/20 border border-zinc-200 dark:border-zinc-700 hover:border-indigo-600 dark:hover:border-indigo-500 transition group">
+          <i class="bi bi-whatsapp text-4xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 text-zinc-700 dark:text-zinc-300">WhatsApp</p>
+        </a>
+        <a href="mailto:caiquedm11@gmail.com"
+          class="bg-white dark:bg-zinc-800 p-4 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-600/20 border border-zinc-200 dark:border-zinc-700 hover:border-indigo-600 dark:hover:border-indigo-500 transition group">
+          <i
+            class="devicon-google-plain text-4xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 text-zinc-700 dark:text-zinc-300">E-mail</p>
+        </a>
+        <a href="curriculo-atualizado.pdf" target="_blank"
+          class="bg-white dark:bg-zinc-800 p-4 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-600/20 border border-zinc-200 dark:border-zinc-700 hover:border-indigo-600 dark:hover:border-indigo-500 transition group">
+          <i class="bi bi-file-text text-4xl text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition"></i>
+          <p class="mt-2 text-zinc-700 dark:text-zinc-300">Currículo</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer
+    class="text-center py-8 text-zinc-500 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+    <p>© 2026 Caique Dias</p>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeIconDark = document.getElementById('themeIconDark');
+    const html = document.documentElement;
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+      themeIcon.classList.add('hidden');
+      themeIconDark.classList.remove('hidden');
+    } else {
+      html.classList.remove('dark');
+      themeIcon.classList.remove('hidden');
+      themeIconDark.classList.add('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+
+      if (html.classList.contains('dark')) {
+        localStorage.theme = 'dark';
+        themeIcon.classList.add('hidden');
+        themeIconDark.classList.remove('hidden');
+      } else {
+        localStorage.theme = 'light';
+        themeIcon.classList.remove('hidden');
+        themeIconDark.classList.add('hidden');
+      }
+    });
+  </script>
+
+  <script>
+    fetch("https://api.github.com/users/CaiqueJar/repos?sort=updated")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("projects");
+        container.innerHTML = ''; // Limpa o container antes de adicionar
+
+        data.filter(repo => !repo.fork).slice(0, 6).forEach(repo => {
+          container.innerHTML += `
+            <div class="group bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl hover:bg-zinc-50 dark:hover:bg-zinc-900/80 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-zinc-100 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 group-hover:border-indigo-500/50 transition-colors">
+                        <i class="devicon-github-original text-2xl text-zinc-600 dark:text-zinc-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"></i>
+                    </div>
+                    <span class="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-600 font-bold bg-zinc-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-zinc-200 dark:border-zinc-800">Repo</span>
+                </div>
+                <h3 class="font-bold text-xl text-zinc-800 dark:text-zinc-100 mb-2">${repo.name}</h3>
+                <p class="text-sm text-zinc-600 dark:text-zinc-500 mb-6 line-clamp-2 leading-relaxed">
+                    ${repo.description || "Sem descrição disponível ainda."}
+                </p>
+                <a href="${repo.html_url}" target="_blank" class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-sm font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
+                    Explorar código <span>&rarr;</span>
+                </a>
+            </div>
+            `;
         });
-        function typingAction() {
-            let typing = document.getElementById('typing');
-            typing.style.color = "var(--black)";
-            typing.style.background = "none";
-            let typingText = typing.innerText;
-            typing.innerHTML = 'O';
-            let text = '';
-            for (let i = 0; i < typingText.length; i++) {
-                setTimeout(function() {
-                    text = text + typingText[i];
-                    typing.innerHTML = text;
-                    if(i == typingText.length - 1) {
-                        setTimeout(function() {
-                            typing.style.color = "#fff";
-                            typing.style.background = "#3266D0";
-                        }, 1000);
-                        setTimeout(function() {
-                            typingAction();
-                        }, 2000);
-                    }
-                }, 150 * i, i);
-            }
+      })
+      .catch(error => {
+        console.error('Erro ao carregar projetos:', error);
+        document.getElementById("projects").innerHTML = '<p class="text-center text-zinc-500 col-span-3">Erro ao carregar projetos do GitHub.</p>';
+      });
+  </script>
+
+  <!-- Script de inicialização do Splide -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Splide('#sites-slider', {
+        type: 'loop',
+        perPage: 3,
+        perMove: 1,
+        gap: '2rem',
+        pagination: false,
+        arrows: true,
+        autoplay: true,
+        interval: 4000,
+        pauseOnHover: true,
+        speed: 800,
+        breakpoints: {
+          1024: {
+            perPage: 2,
+            gap: '1.5rem',
+          },
+          768: {
+            perPage: 1,
+            gap: '1rem',
+          },
+        },
+        classes: {
+          pagination: 'splide__pagination mt-8',
+          page: 'splide__pagination__page',
         }
-    </script>
+      }).mount();
+    });
+  </script>
+
 </body>
+
 </html>
