@@ -171,9 +171,10 @@
         fetch('https://cors.io/?url=https://ipapi.co/json/')
           .then(response => response.json())
           .then(data => {
+            console.log(data);
             if (data.country_code !== 'BR') {
-              sessionStorage.setItem('redirected', 'true');
-              window.location.href = 'en.html';
+              // sessionStorage.setItem('redirected', 'true');
+              // window.location.href = 'en.html';
             }
           })
           .catch(error => {
