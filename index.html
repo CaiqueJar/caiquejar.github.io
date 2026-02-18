@@ -162,27 +162,20 @@
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200">
 
   <script>
-    (function() {
-      if (sessionStorage.getItem('redirected')) {
-        return;
-      }
+  (function() {
+    if (sessionStorage.getItem('redirected')) return;
 
-      if (!window.location.pathname.includes('en.html')) {
-        fetch('https://cors.io/?url=https://ipapi.co/json/')
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            if (data.country_code !== 'BR') {
-              // sessionStorage.setItem('redirected', 'true');
-              // window.location.href = 'en.html';
-            }
-          })
-          .catch(error => {
-            console.log('Erro ao detectar localização:', error);
-          });
+    const language = navigator.language || navigator.userLanguage;
+
+    if (!window.location.pathname.includes('en.html')) {
+      if (!language.startsWith('pt')) {
+        sessionStorage.setItem('redirected', 'true');
+        window.location.href = 'en.html';
       }
-    })();
+    }
+  })();
   </script>
+
 
   <div class="fixed top-4 right-4 z-50">
     <button id="themeToggle"
